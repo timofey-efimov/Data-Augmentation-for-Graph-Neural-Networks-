@@ -37,14 +37,26 @@ will be much more centralized around the initial post. These distinctive structu
 easier graph classification problem, that also enables us to gain insight into the effectiveness of our
 graph sampling technique.
 
+The binary classification can be represented as follows:
+
+ <font size="5s"> Input for the binary graph classification problem </font>
+ <br>
+ <img src="https://i.ibb.co/FV3wpR6/binary1.png" alt="drawing" width="300"/>
+
+
+<font size="5s"> Result of binary graph classification </font>
+ <br>
+ <img src="https://i.ibb.co/S0f5CX6/binary2.png" alt="drawing" width="300"/>
+
+
  <font size="5s"> Example of the graph from Reddit Dataset: </font>
  <br>
- <img src="https://i.ibb.co/6tPdrQ4/10nodes.png" alt="drawing" width="200"/>
+ <img src="https://i.ibb.co/6tPdrQ4/10nodes.png" alt="drawing" width="300"/>
 
 
 <font size="5s"> Example of newly generated graph of 10 times bigger, similar to previous one in structure: </font>
  <br>
- <img src="https://i.ibb.co/Jqmrj79/100nodes.png" alt="drawing" width="200"/>
+ <img src="https://i.ibb.co/Jqmrj79/100nodes.png" alt="drawing" width="300"/>
 
 ### Graph Neural Network
 
@@ -56,10 +68,41 @@ To provide context, this structure defines feature dimensionality at each iterat
 Each layer is graph convolutional layer with a trainable skip connection.
 
 
+### Algorithm Description
+
+The main idea behind this data augmentation technique is separate a small
+group of graphs from the original dataset, and for each of the graphs
+in the group infer a graphon. Then, by linear combination with equal weights
+find the "average" graphon for this group. In our case, we defined group
+as all graphs with the same number of nodes.
+
+Once the group graphon is found, we need to sample graphs of 3 times previous
+number of nodes size. Number of samples is a variable that can be tuned
+in the code. Among these samples using Gromov-Wasserstein distances
+we can find the samples that are closest to the stochastic block
+model that represents the "average" graphon.
+
+More mathematical and precise algorithm description is below:
+
+ <img src="https://i.ibb.co/Xz2tgDX/Algorithm1.png" alt="drawing" width="500"/>
+
+
+ <br>
+ <img src="https://i.ibb.co/JC6s3Hg/Algorithm2.png" alt="drawing" width="500"/>
+
+
+It is important to note that for graphon inference adjacency matrices
+are sorted by node degrees so that it would be possible to meaningfully
+combine inferred graphons(align them). The example of the
+graphon, inferred from 1000 nodes, 600 preferentially attached node
+Barabasi-Albert graphon is below:
+
+<img src="https://i.ibb.co/PgLx6S8/barabasi.png" alt="drawing" width="300"/>
+
+
 ### Built With
 
 <!-- * [![py][Python]][Python-url]
 * [![sp][Spacy]][Spacy-url] -->
 
  ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
-
