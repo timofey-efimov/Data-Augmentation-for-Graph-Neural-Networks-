@@ -60,7 +60,6 @@ The binary classification can be represented as follows:
 
 ### Graph Neural Network
 
-
 <font size="5s"> Neural Network Structure: </font>
  <br>
  <img src="https://i.ibb.co/qNStXct/NNarch.png" alt="drawing" width="500"/>
